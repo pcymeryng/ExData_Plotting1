@@ -1,0 +1,7 @@
+install.packages("sqldf")
+library(sqldf)
+df <- read.csv.sql("household_power_consumption.txt", sql="select * from file where Date = '1/2/2007' or Date = '2/2/2007' ", header = TRUE, sep=";")
+df$Date <-as.Date(Date)
+df$Time <-strptime(Time,"HH:mm",tz=""))
+hist(df$Global_active_power,breaks=12,col="red",xlab="Global Active Power (kilowats)",ylab="Frequency",main="Global Active Power")
+quartz.save("plot1.jpg",type="jpg")

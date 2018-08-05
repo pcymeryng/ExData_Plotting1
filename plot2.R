@@ -1,0 +1,8 @@
+library(sqldf)
+df <- read.csv.sql("household_power_consumption.txt", sql="select * from file where Date = '1/2/2007' or Date = '2/2/2007' ", header = TRUE, sep=";")
+df$Date <-as.Date(Date)
+df$Time <-strptime(Time,"HH:mm",tz=""))
+plot(df$Global_active_power,type="l",pch=1000,ylab="Global Active Power",xlab="",labels=FALSE)
+axis(1, at=c(0,1500,2500), labels=c("Thu","Fry","Sat"))
+axis(2, at=c(0,2,4,6), labels=c(0,2,4,6))
+quartz.save("plot2.png",type="png")

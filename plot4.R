@@ -1,0 +1,25 @@
+library(sqldf)
+df <- read.csv.sql("household_power_consumption.txt", sql="select * from file where Date = '1/2/2007' or Date = '2/2/2007' ", header = TRUE, sep=";")
+df$Date <-as.Date(Date)
+df$Time <-strptime(Time,"HH:mm",tz=""))
+par(mfrow=c(2,2))
+plot(df$Global_active_power,type="l",pch=1000,ylab="Global Active Power",xlab="",labels=FALSE)
+axis(1, at=c(0,1500,2500), labels=c("Thu","Fry","Sat"))
+axis(2, at=c(0,2,4,6), labels=c(0,2,4,6))
+
+plot(df$Voltage,type="l",pch=1000,ylab="Voltage",xlab="datetime",labels=FALSE)
+axis(1, at=c(0,1500,2500), labels=c("Thu","Fry","Sat"))
+axis(2, at=c(234,238,242,246), labels=c(234,238,242,246))
+
+
+plot(df$Sub_metering_1 ,type="l",pch=1000,ylab= "Energy Sub Metering",xlab="",labels=FALSE)
+lines(df$Sub_metering_2 ,type="l",pch=1000,col= "red")
+lines(df$Sub_metering_3 ,type="l",pch=1000,col= "blue")
+axis(1, at=c(0,1500,2500), labels=c("Thu","Fri","Sat"))
+axis(2, at=c(0,10,20,30), labels=c(0,10,20,30))
+legend("topright",pch=1,col=c("black","red","blue"),legend=c("Sub-Metering-1","Sub-Metering-2","Sub-Metering-3"))
+
+plot(df$Global_reactive_power,type="l",pch=1000,ylab="Global_reactive_power",xlab="datetime",labels=FALSE)
+axis(1, at=c(0,1500,2500), labels=c("Thu","Fry","Sat"))
+axis(2, at=c(0.0,0.1,0.2,0.3,0.4,0.5), labels=c(0.0,0.1,0.2,0.3,0.4,0.5))
+quartz.save("plot4.png",type="png")
